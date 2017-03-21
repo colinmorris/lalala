@@ -28,7 +28,7 @@ class SongDB(object):
             # be safe.
             extant.weeks = max(extant.weeks, song.weeks)
             extant.peakPos = min(extant.peakPos, song.peakPos)
-            extant.earliest = min(date, song.date)
+            extant.earliest = min(extant.earliest, date)
         else:
             song.earliest = date
             artist_songs[song.title] = song
@@ -49,21 +49,23 @@ date = None
 path = chartname + '.pickle'
 db = SongDB(path)
 i = 0
-lim = 3
+lim = float('inf')
 # TODO: load pickled charts
 charts = []
 while 1:
     chart = billboard.ChartData(chartname, date)
-    date = datetime.datetime.strptime(chart.date, DATE_FMT).date()
+    dt = datetime.datetime.strptime(chart.date, DATE_FMT).date()
 
     for song in chart:
-        db.add_song(song, date)
+        db.add_song(song, dt)
     time.sleep(SLEEPYTIME)
     charts.append(chart)
 
     i += 1
     if not chart.previousDate or i >= lim:
         break
+    if (i % 26) == 0:
+        print date
     date = chart.previousDate
 
 db.save()

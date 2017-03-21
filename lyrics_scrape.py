@@ -9,7 +9,7 @@ LYRICS_DIR = 'lyrics'
 SLEEPYTIME = 1
 
 def song_key(song):
-    k = song.artist[:10] + '-' + song.title[:40]
+    k = song.artist[:15] + '-' + song.title[:20]
     k = k.replace('/', '')
     return k.replace(' ', '_')
 
@@ -19,6 +19,7 @@ def unicode_unfuck(s):
 with open(PICKLE_NAME) as f:
     db = pickle.load(f)
 
+# Artist, Title tuples for songs we couldn't find lyrics for. Save them to a file at the end.
 skipped = set()
 i = 0
 lim = float('inf')
@@ -34,7 +35,7 @@ for artist in db:
             time.sleep(SLEEPYTIME)
         except Lyrics.LyricsNotFoundException:
             print "Failed to find lyrics for {} using query: {}".format(song, query)
-            skipped.add(k)
+            skipped.add( (song.artist, song.title) )
             continue
         if len(lyrics) == 0:
             print "WARNING: Got length 0 lyrics for {}".format(song)
@@ -57,4 +58,8 @@ for artist in db:
     if i >= lim:
         break
 
-print "Failed to find {} songs: {}".format(len(skipped), skipped)
+print "Failed to find {} songs".format(len(skipped))
+with open('song_404s.txt', 'w') as f:
+    for (artist, title) in skipped:
+        f.write(artist + '\t' + title + '\n')
+print "Wrote to song_404s.txt"
