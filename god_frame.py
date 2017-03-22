@@ -20,5 +20,6 @@ for artist_discog in db.itervalues():
         rows.append(row)
 
 df = pd.DataFrame(rows)
+df['date'] = pd.to_datetime(df['date'])
 print "Saving god frame with shape {}".format(df.shape)
 df.to_pickle(common.OMNI_PICKLE_NAME)
