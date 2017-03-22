@@ -95,9 +95,10 @@ def get_lyrics2(song, if_url_changed=False):
             .replace(".", "")\
             .replace("& ", "")\
             .replace('?', '')\
-            .replace('f**k', 'fuck')\
-            .replace(' ', '-')
+            .replace('f**k', 'fuck')
+
     fragment = re.sub('\s+', ' ', fragment)
+    fragment = fragment.replace(' ', '-')
 
     try:
         url = 'http://www.metrolyrics.com/{}.html'.format(fragment)
