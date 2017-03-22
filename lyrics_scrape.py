@@ -2,17 +2,15 @@ import pickle
 import time
 import os
 
+import common
 import Lyrics
 
 PICKLE_NAME = 'hot-100.pickle'
 LYRICS_DIR = 'lyrics'
 SLEEPYTIME = 1
 EXT = '.txt'
+MAX_CHART_POS = 10 # Only scrape songs that charted at least this high
 
-def song_key(song):
-    k = song.artist[:15] + '-' + song.title[:20]
-    k = k.replace('/', '')
-    return k.replace(' ', '_')
 
 def unicode_unfuck(s):
     return ''.join(map(lambda c: chr(ord(c)), s))
@@ -33,10 +31,16 @@ lim = float('inf')
 # between requests anyways, so who cares if it's slower
 #extant = load_extant(LYRICS_DIR)
 malencoded = 0
-with open('song_404s.txt', 'w') as skips_file:
+with open('song_404s.txt', 'a+') as skips_file:
+    bad_keys = set([line.split('\t')[-1].strip() for line in skips_file])
+    skips_file.seek(0)
     for artist in db:
         for song in db[artist].itervalues():
-            k = song_key(song)
+            if song.peakPos > MAX_CHART_POS:
+                continue
+            k = common.song_key(song)
+            if k in bad_keys:
+                continue
             #if k in extant:
             #    continue
             path = os.path.join(LYRICS_DIR, k + EXT)
@@ -46,7 +50,7 @@ with open('song_404s.txt', 'w') as skips_file:
                 time.sleep(SLEEPYTIME)
                 lyrics, url = Lyrics.get_lyrics2(song)
             except Lyrics.LyricsNotFoundException:
-                print "Failed to find lyrics for {} ({})".format(song, url)
+                print "Failed to find lyrics for {}".format(song)
                 try:
                     skips_file.write('\t'.join([song.artist, song.title, k]) + '\n')
                 except UnicodeEncodeError:
