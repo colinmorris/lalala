@@ -44,33 +44,49 @@ class SongDB(object):
         return n
 
 
-date = None
 
 path = chartname + '.pickle'
+chartpicklename = chartname + '-chartdata.pickle'
+try:
+    with open(chartpicklename) as f:
+        charts = pickle.load(f)
+        date = charts[-1].previousDate
+except IOError:
+    charts = []
+    date = None
+
 db = SongDB(path)
 i = 0
 lim = float('inf')
 # TODO: load pickled charts
-charts = []
-while 1:
-    chart = billboard.ChartData(chartname, date)
-    dt = datetime.datetime.strptime(chart.date, DATE_FMT).date()
+try:
+    while 1:
+        chart = billboard.ChartData(chartname, date)
+        dt = datetime.datetime.strptime(chart.date, DATE_FMT).date()
 
-    for song in chart:
-        db.add_song(song, dt)
-    time.sleep(SLEEPYTIME)
-    charts.append(chart)
+        for song in chart:
+            db.add_song(song, dt)
+        charts.append(chart)
+        time.sleep(SLEEPYTIME)
 
-    i += 1
-    if not chart.previousDate or i >= lim:
-        break
-    if (i % 26) == 0:
-        print date
-    date = chart.previousDate
+        i += 1
+        if not chart.previousDate or i >= lim:
+            break
+        if (i % 26) == 0:
+            print date
+        date = chart.previousDate
+except: # gotta catchemall
+    if i == 0:
+        raise
+    print "Uh oh. Got unexpected exception. Saving whatever we've accumulated before bailing"
+    db.save()
+    with open(chartpicklename, 'w') as f:
+        pickle.dump(charts, f)
+    raise
+
 
 db.save()
 print "Saved db with {} songs to {}".format(db.size(), path)
-
-with open(chartname + '-chartdata.pickle', 'w') as f:
+with open(chartpicklename, 'w') as f:
     pickle.dump(charts, f)
 

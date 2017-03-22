@@ -13,6 +13,54 @@ except ImportError:
 class LyricsNotFoundException(Exception):
     pass
 
+def get_metrolyrics(url):
+    resp = requests.get(url, headers={
+                               'User-Agent': 'Mozilla/5.0 (Macintosh; Intel'
+                               'Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, '
+                               'like Gecko) Chrome/55.0.2883.95 Safari/537.36'
+                               }
+                               )
+    if resp.status_code == 404:
+        raise LyricsNotFoundException
+    lyrics_html = resp.text
+
+    soup = BeautifulSoup(lyrics_html, "lxml")
+    raw_lyrics = (soup.findAll('p', attrs={'class': 'verse'}))
+    paras = []
+    try:
+        final_lyrics = unicode.join(u'\n', map(unicode, raw_lyrics))
+    except NameError:
+        final_lyrics = str.join(u'\n', map(str, raw_lyrics))
+
+    final_lyrics = (final_lyrics.replace('<p class="verse">', '\n'))
+    final_lyrics = (final_lyrics.replace('<br/>', ' '))
+    final_lyrics = final_lyrics.replace('</p>', ' ')
+    return (final_lyrics, url)
+
+def get_lyrics2(song):
+    # Using google isn't really scalable. Looks like they're pretty serious about
+    # detecting and blocking scrapers.
+    # Have to just guess the URL for now :/
+    artist = song.artist.lower()
+    # metrolyrics quirk. if artist is foo ft bar, url seems to always just have foo
+    for feat in [' featuring', ' &']:
+        feati = artist.find(feat)
+        if feati != -1:
+            artist = artist[:feati]
+    title = song.title.lower().replace(' & ', ' and ')
+    fragment = title + ' lyrics ' + artist
+    fragment = fragment\
+            .replace("'", "")\
+            .replace(".", "")\
+            .replace("& ", "")\
+            .replace(' ', '-')
+
+    try:
+        url = 'http://www.metrolyrics.com/{}.html'.format(fragment)
+    except UnicodeEncodeError:
+        raise LyricsNotFoundException 
+    return get_metrolyrics(url)
+
 
 def get_lyrics(song_name):
 
@@ -42,27 +90,9 @@ def get_lyrics(song_name):
         link = result[link_start:link_end + 4]
         if 'lyrics' in link[len(domain):]:
             lyrics_found = True
+    return get_metrolyrics(link)
 
 
-    lyrics_html = requests.get(link, headers={
-                               'User-Agent': 'Mozilla/5.0 (Macintosh; Intel'
-                               'Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, '
-                               'like Gecko) Chrome/55.0.2883.95 Safari/537.36'
-                               }
-                               ).text
-
-    soup = BeautifulSoup(lyrics_html, "lxml")
-    raw_lyrics = (soup.findAll('p', attrs={'class': 'verse'}))
-    paras = []
-    try:
-        final_lyrics = unicode.join(u'\n', map(unicode, raw_lyrics))
-    except NameError:
-        final_lyrics = str.join(u'\n', map(str, raw_lyrics))
-
-    final_lyrics = (final_lyrics.replace('<p class="verse">', '\n'))
-    final_lyrics = (final_lyrics.replace('<br/>', ' '))
-    final_lyrics = final_lyrics.replace('</p>', ' ')
-    return (final_lyrics)
 
 if __name__ == '__main__':
     song = ' '.join(sys.argv[1:])
