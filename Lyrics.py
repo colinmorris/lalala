@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
 import sys
+import re
 
 try:
     from urllib.parse import quote_plus
@@ -43,17 +44,35 @@ def get_lyrics2(song):
     # Have to just guess the URL for now :/
     artist = song.artist.lower()
     # metrolyrics quirk. if artist is foo ft bar, url seems to always just have foo
-    for feat in [' featuring', ' &']:
+    cleaved = False
+    for feat in [' featuring', ' &', ' feat.']:
         feati = artist.find(feat)
         if feati != -1:
             artist = artist[:feati]
+            cleaved = True
+    if cleaved:
+        if ',' in artist:
+            artist = artist.split(',')[0].strip()
+    if artist == 'n sync':
+        artist = 'nsync'
+    if artist == 'p!nk':
+        artist = 'pink'
     title = song.title.lower().replace(' & ', ' and ')
     fragment = title + ' lyrics ' + artist
+    # Lowercase islands seem to come up a lot in song titles like
+    # "It Wasn t Me", or "I ll Be There"
     fragment = fragment\
             .replace("'", "")\
+            .replace(' s ', 's ')\
+            .replace(' t ', 't ')\
+            .replace(' ll ', 'll ')\
+            .replace('-', '')\
             .replace(".", "")\
             .replace("& ", "")\
+            .replace('?', '')\
+            .replace('f**k', 'fuck')\
             .replace(' ', '-')
+    fragment = re.sub('\s+', ' ', fragment)
 
     try:
         url = 'http://www.metrolyrics.com/{}.html'.format(fragment)
