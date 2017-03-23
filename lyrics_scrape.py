@@ -1,3 +1,5 @@
+# TODO: if you rerun this later, make sure you check against filenames in "bad_lyrics" dir,
+# to avoid scraping them twice 
 import pickle
 import time
 import os
@@ -64,7 +66,7 @@ with open('song_404s.txt', 'a+') as skips_file:
             except Lyrics.URLNotChangedException:
                 unchanged += 1
                 continue
-            if len(lyrics) == 0:
+            if len(lyrics) < 5:
                 print "WARNING: Got length 0 lyrics for {} ({})".format(song, url)
                 skips_file.write('\t' + '\t'.join([song.artist, song.title, k]) + '\n')
                 continue
