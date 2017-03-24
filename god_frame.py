@@ -21,7 +21,8 @@ for artist_discog in db.itervalues():
 
 df = pd.DataFrame(rows)
 df['date'] = pd.to_datetime(df['date'])
-df['raw'] = df['raw'].astype(int)
-df['comp'] = df['comp'].astype(int)
+# Blargh. Can't do this with nullable col. http://stackoverflow.com/a/21290084/262271
+#df['raw'] = df['raw'].astype(int)
+#df['comp'] = df['comp'].astype(int)
 print "Saving god frame with shape {}".format(df.shape)
 df.to_pickle(common.OMNI_PICKLE_NAME)

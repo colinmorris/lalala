@@ -4,7 +4,8 @@ import pandas as pd
 import common
 
 BIAS_ADJUSTED_RATIO = 1
-BIAS = 34.775287769
+#BIAS = 34.775287769
+BIAS = 12
 
 def get_frame(having_lyrics=False):
     om = common.get_omnisong()

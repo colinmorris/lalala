@@ -67,6 +67,7 @@ def get_lyrics2(song):
             .replace(' t ', 't ')\
             .replace(' ll ', 'll ')\
             .replace('-', '')\
+            .replace('#', '')\
             .replace(".", "")\
             .replace("& ", "")\
             .replace('?', '')\
