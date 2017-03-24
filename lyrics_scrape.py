@@ -12,7 +12,6 @@ LYRICS_DIR = 'lyrics'
 SLEEPYTIME = 1
 EXT = '.txt'
 MAX_CHART_POS = 1000 # Only scrape songs that charted at least this high
-CHANGED_URLS = 0
 
 def unicode_unfuck(s):
     return ''.join(map(lambda c: chr(ord(c)), s))
@@ -33,7 +32,6 @@ lim = float('inf')
 # between requests anyways, so who cares if it's slower
 #extant = load_extant(LYRICS_DIR)
 malencoded = 0
-unchanged = 0
 with open('song_404s.txt', 'a+') as skips_file:
     bad_keys = set([line.split('\t')[-1].strip() for line in skips_file])
     skips_file.seek(0)
@@ -50,7 +48,7 @@ with open('song_404s.txt', 'a+') as skips_file:
             if os.path.exists(path):
                 continue
             try:
-                lyrics, url = Lyrics.get_lyrics2(song, if_url_changed=CHANGED_URLS)
+                lyrics, url = Lyrics.get_lyrics2(song)
                 time.sleep(SLEEPYTIME)
             except Lyrics.LyricsNotFoundException:
                 time.sleep(SLEEPYTIME)
@@ -88,5 +86,3 @@ with open('song_404s.txt', 'a+') as skips_file:
             break
 
 print "Skipped {} malencoded songs".format(malencoded)
-if CHANGED_URLS:
-    print "Scraped {} songs ({} songs had unchanged urls)".format(i, unchanged)

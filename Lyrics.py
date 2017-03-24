@@ -38,32 +38,7 @@ def get_metrolyrics(url):
     final_lyrics = final_lyrics.replace('</p>', ' ')
     return (final_lyrics, url)
 
-def get_lyrics_url_old(song):
-    """Previous url-generation routine"""
-    # Using google isn't really scalable. Looks like they're pretty serious about
-    # detecting and blocking scrapers.
-    # Have to just guess the URL for now :/
-    artist = song.artist.lower()
-    # metrolyrics quirk. if artist is foo ft bar, url seems to always just have foo
-    for feat in [' featuring', ' &']:
-        feati = artist.find(feat)
-        if feati != -1:
-            artist = artist[:feati]
-    title = song.title.lower().replace(' & ', ' and ')
-    fragment = title + ' lyrics ' + artist
-    fragment = fragment\
-            .replace("'", "")\
-            .replace(".", "")\
-            .replace("& ", "")\
-            .replace(' ', '-')
-
-    try:
-        url = 'http://www.metrolyrics.com/{}.html'.format(fragment)
-    except UnicodeEncodeError:
-        raise LyricsNotFoundException 
-    return url
-
-def get_lyrics2(song, if_url_changed=False):
+def get_lyrics2(song):
     # Using google isn't really scalable. Looks like they're pretty serious about
     # detecting and blocking scrapers.
     # Have to just guess the URL for now :/
@@ -104,18 +79,7 @@ def get_lyrics2(song, if_url_changed=False):
         url = 'http://www.metrolyrics.com/{}.html'.format(fragment)
     except UnicodeEncodeError:
         raise LyricsNotFoundException
-    if if_url_changed:
-        # This business is quite silly, but I want to be conservative about hammering their
-        # servers if it's not necessary.
-        old_url = get_lyrics_url_old(song)
-        if url == old_url:
-            raise URLNotChangedException
-
     return get_metrolyrics(url)
-
-class URLNotChangedException(Exception):
-    pass
-
 
 def get_lyrics(song_name):
 
