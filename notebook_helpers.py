@@ -3,12 +3,19 @@ import pandas as pd
 
 import common
 
+BIAS_ADJUSTED_RATIO = 1
+BIAS = 34.775287769
+
 def get_frame(having_lyrics=False):
     om = common.get_omnisong()
-    om['ratio'] = om['raw'] / om['comp']
-    om['date'] = pd.to_datetime(om['date'])
+    # Set this in both cases just for flexibility if I wanna turn adjustment on and off
+    om['raw_ratio'] = om['raw'] / om['comp']
+    if BIAS_ADJUSTED_RATIO:
+        om['ratio'] = om['raw'] / (om['comp']-BIAS)
+    else:
+        om['ratio'] = om['raw'] / om['comp']
     om['year'] = om['date'].apply(lambda d: d.year)
-    om['yearf'] = om['date'].apply(lambda d: d.year + d.month*(12/365) + d.day/365)
+    om['yearf'] = om['date'].apply(lambda d: d.year + d.month/12 + d.day/365)
     if having_lyrics:
         om = om[(om['raw'] > 2) & om['scraped']].copy()
     return om
