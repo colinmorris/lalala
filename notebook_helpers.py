@@ -5,7 +5,8 @@ import common
 
 BIAS_ADJUSTED_RATIO = 1
 #BIAS = 34.775287769
-BIAS = 12
+# 10 for the header, 8 for the footer, 1 for the block prefix (really 3 bits, but I'm rounding up)
+BIAS = 10 + 8 + 1
 
 def get_frame(having_lyrics=False):
     om = common.get_omnisong()
