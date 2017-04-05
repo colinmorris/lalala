@@ -40,7 +40,7 @@ def parse_ratio(f, verbose=False):
     ratio = uncomp / pseudosize
     if verbose:
         print "{} / {} = {:.2f}".format(uncomp, pseudosize, ratio)
-    return ratio
+    return (uncomp, pseudosize)
 
 if __name__ == '__main__':
     with open(fname) as f:
