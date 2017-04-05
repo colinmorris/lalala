@@ -20,7 +20,7 @@ def get_frame(having_lyrics=False):
         om['unbiased_ratio'] = om['raw'] / om['comp']
     om['year'] = om['date'].apply(lambda d: d.year)
     om['yearf'] = om['date'].apply(lambda d: d.year + d.month/12 + d.day/365)
-    # Ratio = the one calculated using infgen
+    # Ratio = the one calculated using infgen (set in god_frame.py)
     om['rscore'] = om['ratio'].apply(lambda x: math.log(x, BASE))
     if having_lyrics:
         om = om[(om['raw'] > 2) & om['scraped']].copy()

@@ -48,7 +48,7 @@ def get_sizes(song_or_key):
     comp = os.path.getsize(path+'.gz')
     return (raw, comp)
 
-def get_inf_ratio(song_or_key):
+def get_inf_sizes(song_or_key):
     """Compression ratio calculated using infgen"""
     if isinstance(song_or_key, basestring):
         k = song_or_key
