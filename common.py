@@ -1,5 +1,6 @@
 import pickle
 import os
+import parse_infgen
 
 CHARTDATA_FILENAME = 'hot-100-chartdata.pickle'
 DB_FILENAME = 'hot-100.pickle'
@@ -46,3 +47,13 @@ def get_sizes(song_or_key):
         raise NotScrapedException
     comp = os.path.getsize(path+'.gz')
     return (raw, comp)
+
+def get_inf_ratio(song_or_key):
+    """Compression ratio calculated using infgen"""
+    if isinstance(song_or_key, basestring):
+        k = song_or_key
+    else:
+        k = song_key(song_or_key)
+    path = os.path.join(LYRICS_DIR, k+'.txt.gz.infgen')
+    with open(path) as f:
+        return parse_infgen.parse_ratio(f)
