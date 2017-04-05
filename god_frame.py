@@ -25,6 +25,7 @@ for artist_discog in db.itervalues():
             scraped = True
             inf_raw, inf_comp = common.get_inf_ratio(song)
             ratio = inf_raw / inf_comp
+            assert raw == inf_raw, "{} != {}".format(raw, inf_raw)
         except common.NotScrapedException:
             raw = comp = None
             scraped = False
@@ -33,7 +34,7 @@ for artist_discog in db.itervalues():
         if canon_title not in title_to_row:
             row = dict(artist=song.artist, title=canon_title, date=song.earliest,
                 peak=song.peakPos, scraped=scraped, 
-                raw=raw, comp=comp, iraw=inf_raw, icomp=inf_comp, ratio=ratio,
+                raw=raw, comp=comp, icomp=inf_comp, ratio=ratio,
             )
             title_to_row[canon_title] = row
         # Got a dupe. Merge them.
