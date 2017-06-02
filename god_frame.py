@@ -23,11 +23,11 @@ for artist_discog in db.itervalues():
         try:
             raw, comp = common.get_sizes(song)
             scraped = True
-            inf_raw, inf_comp = common.get_inf_ratio(song)
+            inf_raw, inf_comp = common.get_inf_sizes(song)
             ratio = inf_raw / inf_comp
             assert raw == inf_raw, "{} != {}".format(raw, inf_raw)
         except common.NotScrapedException:
-            raw = comp = None
+            ratio = raw = comp = inf_comp = None
             scraped = False
             ir = None
         canon_title = canonize_title(title)
