@@ -48,8 +48,13 @@ def get_sizes(song_or_key):
     comp = os.path.getsize(path+'.gz')
     return (raw, comp)
 
-def get_inf_ratio(song_or_key):
-    """Compression ratio calculated using infgen"""
+def get_inf_sizes(song_or_key):
+    """Return raw/compressed sizes used when calculating the infgen-based 
+    compression ratio. Raw size will be the same as above (i.e. just the
+    number you'd get from `wc -c` on the text file).
+    The compressed size will be an approximation of the size of the LZ-77
+    compressed data *before* Huffman coding. Assumes 1 byte per literal, 3
+    bytes per match."""
     if isinstance(song_or_key, basestring):
         k = song_or_key
     else:

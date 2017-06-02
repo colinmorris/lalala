@@ -1,3 +1,4 @@
+from __future__ import division
 import pandas as pd
 import os
 import re
@@ -14,7 +15,6 @@ def canonize_title(title):
     return trans
 
 db = common.get_songdb()
-#columns=['artist', 'title', 'date', 'peak', 'scraped', 'raw', 'comp', ]
 rows = []
 merged = 0
 for artist_discog in db.itervalues():
@@ -23,7 +23,9 @@ for artist_discog in db.itervalues():
         try:
             raw, comp = common.get_sizes(song)
             scraped = True
-            ir = common.get_inf_ratio(song)
+            inf_raw, inf_comp = common.get_inf_ratio(song)
+            ratio = inf_raw / inf_comp
+            assert raw == inf_raw, "{} != {}".format(raw, inf_raw)
         except common.NotScrapedException:
             raw = comp = None
             scraped = False
@@ -31,7 +33,9 @@ for artist_discog in db.itervalues():
         canon_title = canonize_title(title)
         if canon_title not in title_to_row:
             row = dict(artist=song.artist, title=canon_title, date=song.earliest,
-                peak=song.peakPos, scraped=scraped, raw=raw, comp=comp, ratio=ir)
+                peak=song.peakPos, scraped=scraped, 
+                raw=raw, comp=comp, icomp=inf_comp, ratio=ratio,
+            )
             title_to_row[canon_title] = row
         # Got a dupe. Merge them.
         else:
