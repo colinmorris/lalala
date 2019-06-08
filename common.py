@@ -1,6 +1,7 @@
 import pickle
 import os
 import parse_infgen
+import pandas as pd
 
 CHARTDATA_FILENAME = 'hot-100-chartdata.pickle'
 DB_FILENAME = 'hot-100.pickle'
@@ -26,6 +27,8 @@ def get_songdb():
     return db
 
 def get_omnisong():
+    # XXX? Not sure why I switched to this.
+    return pd.read_pickle(OMNI_PICKLE_NAME)
     with open(OMNI_PICKLE_NAME) as f:
         om = pickle.load(f)
     return om
