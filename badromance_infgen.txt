@@ -1,0 +1,314 @@
+! infgen 2.4 output
+!
+gzip
+!
+last
+dynamic
+! stats table 56:1
+litlen 10 6
+litlen 32 4
+litlen 33 8
+litlen 39 6
+litlen 40 7
+litlen 41 7
+litlen 44 7
+litlen 45 6
+litlen 65 8
+litlen 66 9
+litlen 67 9
+litlen 71 9
+litlen 73 7
+litlen 74 9
+litlen 76 9
+litlen 79 9
+litlen 82 8
+litlen 84 9
+litlen 87 8
+litlen 89 9
+litlen 97 4
+litlen 98 7
+litlen 99 6
+litlen 100 5
+litlen 101 4
+litlen 102 7
+litlen 103 6
+litlen 104 5
+litlen 105 5
+litlen 106 8
+litlen 107 7
+litlen 108 5
+litlen 109 6
+litlen 110 5
+litlen 111 5
+litlen 112 8
+litlen 114 5
+litlen 115 5
+litlen 116 5
+litlen 117 6
+litlen 118 7
+litlen 119 6
+litlen 120 9
+litlen 121 6
+litlen 122 9
+litlen 256 9
+litlen 257 4
+litlen 258 5
+litlen 259 5
+litlen 260 6
+litlen 262 7
+litlen 263 9
+litlen 264 7
+litlen 265 8
+litlen 266 6
+litlen 267 6
+litlen 268 6
+litlen 269 6
+litlen 270 6
+litlen 271 9
+litlen 272 9
+litlen 273 9
+litlen 274 8
+litlen 275 8
+litlen 276 7
+litlen 277 7
+litlen 278 9
+litlen 279 8
+litlen 280 9
+litlen 281 8
+litlen 283 9
+dist 2 5
+dist 3 6
+dist 4 5
+dist 5 7
+dist 6 7
+dist 7 6
+dist 8 3
+dist 9 5
+dist 10 3
+dist 11 4
+dist 12 4
+dist 13 5
+dist 14 4
+dist 15 5
+dist 16 5
+dist 17 4
+dist 18 4
+dist 19 3
+dist 20 6
+dist 21 4
+literal 10 'Oh-o
+match 10 3
+literal '! 
+match 14 16
+match 5 19
+literal 10 'Caught in a bad romance 
+literal 10
+match 61 61
+literal 10 'Rah r
+match 3 4
+literal 'ah-
+match 5 3
+match 3 45
+literal 'Ro m
+match 4 22
+literal 'o-
+match 3 7
+match 4 4
+literal ' 
+literal 10 'Gaga 
+match 3 77
+literal 'la
+match 3 3
+match 3 35
+literal 'Want your
+match 59 78
+match 35 79
+literal 'I w
+match 9 26
+literal 'ugly 
+match 13 18
+literal 'disease
+match 14 21
+literal 'everything 
+literal 10 'As lo
+match 3 9
+literal 'as it's fre
+match 15 46
+literal 'lov
+match 3 18
+literal 'L
+match 3 6
+literal '-l
+match 8 5
+match 20 34
+match 14 120
+literal 'rama 
+literal 10 'The touch of
+match 6 25
+literal 'hand
+match 15 62
+literal 'eather studded kiss
+match 4 390
+match 3 21
+literal ' s
+match 18 46
+match 19 142
+literal ', 
+match 17 34
+literal '(
+match 32 34
+literal ')
+match 3 177
+literal 'You know
+match 3 107
+literal 'at
+match 11 34
+match 3 278
+match 3 119
+literal 'y
+match 15 30
+literal 'nee
+match 6 21
+match 8 144
+literal 'it
+match 5 395
+match 4 71
+match 28 405
+match 5 144
+match 17 200
+literal 'r
+match 3 389
+literal 'nge
+match 5 62
+match 5 30
+literal 'me could write
+match 16 644
+literal '(
+match 13 690
+match 3 536
+literal '!) 
+match 23 102
+literal 'All
+match 10 19
+literal 'rs
+match 48 106
+match 63 812
+match 14 168
+match 10 63
+match 84 876
+match 47 798
+literal 'horror
+match 15 800
+literal 'esign 
+literal 10 ''
+match 3 146
+match 3 807
+match 3 20
+literal ''r
+match 4 275
+literal 'criminal
+match 13 801
+match 5 50
+match 3 23
+match 68 801
+literal 'psycho,
+match 6 13
+match 3 424
+literal 'tigo shtick
+match 10 206
+match 4 289
+literal 'my
+match 3 450
+literal 'ar wind
+match 3 653
+literal 10 'Baby
+match 8 168
+literal 's
+match 3 46
+match 19 765
+match 140 799
+literal ',
+match 111 794
+match 104 793
+match 51 731
+match 143 795
+match 78 1750
+literal 'Wal
+match 3 651
+literal 'w
+match 3 6
+literal ' fashion
+match 3 33
+literal 'by
+match 3 19
+literal 'ork
+match 4 524
+literal 'm
+match 4 392
+match 5 556
+literal 'bit
+match 3 1553
+literal 'crazy 
+match 5 56
+literal '-
+match 115 55
+literal 'pass
+match 18 55
+literal 'I'm
+match 3 375
+match 5 1796
+match 6 56
+match 4 31
+match 20 694
+match 5 771
+match 21 694
+match 18 43
+literal 'I don't
+match 4 24
+literal 'n
+match 3 468
+literal 'e
+match 3 96
+literal 'iends
+match 3 88
+literal '(J'veux
+match 3 1828
+match 3 495
+literal 'm
+match 5 1948
+literal 't je 
+match 6 21
+literal 'a
+match 4 86
+match 3 352
+match 3 1801
+literal 'j
+match 15 40
+literal ')
+match 26 87
+match 4 973
+match 24 113
+match 52 52
+match 22 498
+literal '(c
+match 22 680
+literal ')
+match 11 255
+match 218 1018
+match 23 774
+match 25 956
+match 23 48
+match 65 88
+match 78 1044
+end
+! stats literals 5.4 bits each (1772/331)
+! stats matches 88.6% (128 x 20.2)
+! stats inout 534:0 (459) 2916 0
+! stats total inout 534:0 (459) 2916
+! stats total block average 2916.0 uncompressed
+! stats total block average 459.0 symbols
+! stats total literals 5.4 bits each
+! stats total matches 88.6% (128 x 20.2)
+!
+crc
+length
